@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -311,8 +312,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(intentRegister);
                 break;
             case R.id.btnLoginGoogle:
-                Intent intentSignIn = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-                startActivityForResult(intentSignIn, GOOGLE_SIGN_IN_CODE);
+                if(Utilities.isNetworkAvailable(getApplicationContext())){
+                    Intent intentSignIn = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+                    startActivityForResult(intentSignIn, GOOGLE_SIGN_IN_CODE);
+                }else{
+                    Utilities.makeSnackbar(currentView, getString(R.string.error_network),getColor(R.color.colorAccent), getColor(R.color.colorText) );
+                    Utilities.hideSoftKeyboard(LoginActivity.this);
+                }
                 break;
 
         }
@@ -330,7 +336,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Utilities.hideSoftKeyboard(LoginActivity.this);
         }else{
             //Verify user and password from SQLite
-            if(databaseHelper.checkUser(etEmail.getText().toString().trim(), etPassword.getText().toString().trim())){
+            if(databaseHelper.checkUser(etEmail.getText().toString().trim().toLowerCase(), etPassword.getText().toString().trim())){
                 Intent userActivityIntent = new Intent(LoginActivity.this, MainActivity.class);
                 userActivityIntent.putExtra("EMAIL", etEmail.getText().toString().trim());
 

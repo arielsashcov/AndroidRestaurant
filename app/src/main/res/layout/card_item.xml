@@ -1,49 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="68dp" >
+    android:layout_height="125dp" >
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_margin="4dp"
-        android:layout_height="200dp"
+        android:layout_height="350dp"
         card_view:cardCornerRadius="4dp"
-        card_view:elevation="14dp">
+        card_view:elevation="14dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="4dp">
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/iv_image"
-                android:layout_height="wrap_content"
+
+
+            <RatingBar
+                android:id="@+id/listrating"
                 android:layout_width="wrap_content"
-                android:src="@drawable/bullet"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true">
-            </ImageView>
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="0.1"
+                android:rating="4.5"
+                android:isIndicator="true"
+                android:layout_alignParentEnd="true"
+                style="?android:attr/ratingBarStyleIndicator"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp" />
 
             <TextView
-                android:id="@+id/tv_text"
-
-                android:layout_toRightOf ="@+id/iv_image"
+                android:id="@+id/tv_name"
+                android:text="Pizza Capital"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="16sp">
-            </TextView>
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/img_restaurant"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/capital"
+                android:layout_below="@+id/tv_name"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                />
 
             <TextView
-                android:id="@+id/tv_blah"
+                android:id="@+id/tv_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Address"
-                android:layout_below="@+id/tv_text"
-                android:layout_toEndOf="@+id/iv_image">
-            </TextView>
+                android:layout_toRightOf="@+id/img_restaurant"
+                android:layout_below="@+id/listrating"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="15745 Pierrefonds Blvd, Pierrefonds, QC H9H 3P6" />
+
+
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>

@@ -5,4 +5,5 @@
     <color name="colorAccent">#F05D23</color>
     <color name="colorText">#FFFFFF</color>
     <color name="colorTextHint">#F05D23</color>
+    <color name="cardview_initial_background">#71C3DE</color>
 </resources>

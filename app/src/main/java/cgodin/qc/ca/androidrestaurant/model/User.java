@@ -13,7 +13,6 @@ public class User {
     private String email;
     private String password;
 
-
     public User(){
 
     }
@@ -42,4 +41,16 @@ public class User {
     public String getPassword() { return password; }
 
     public void setPassword(String password) { this.password = password; }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", utype=" + utype +
+                ", uid='" + uid + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

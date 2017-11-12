@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,10 +15,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -31,6 +34,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import cgodin.qc.ca.androidrestaurant.R;
+import cgodin.qc.ca.androidrestaurant.utilities.Utilities;
 
 /**
  * Created by Ariel S on 2017-10-31.
@@ -38,7 +42,6 @@ import cgodin.qc.ca.androidrestaurant.R;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-    private Button btnLogout;
     private GoogleApiClient googleApiClient;
     private TextView nameView;
 
@@ -75,68 +78,73 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             nameView.setText("Welcome " + emailFromIntent);
         }
 
-        /*Google user - retrieving sign-in information*/
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
+             /*Google user - retrieving sign-in information*/
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestEmail()
+                    .build();
 
-        googleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
+            googleApiClient = new GoogleApiClient.Builder(this)
+                    .enableAutoManage(this, this)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                    .build();
 
         /*Facebook user - retrieving sign-in information*/
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (user != null) {
-            String name = user.getDisplayName();
-            String email = user.getEmail();
-            String uid = user.getUid();
-            nameView.setText("Facebook: " + email);
-
-
-            Log.wtf("Facebook email: ", email);
-            Log.wtf("Facebook uid: ", uid);
-            Log.wtf("Facebook name", name);
-
-        } else {
-            //goToLoginScreen();
-        }
+            if (user != null) {
+                String name = user.getDisplayName();
+                String email = user.getEmail();
+                String uid = user.getUid();
+                nameView.setText("Facebook: " + email);
 
 
-        btnLogout = (Button) findViewById(R.id.btnLogout);
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut(); //Disconnect from Facebook using FirebaseAuth service
-                LoginManager.getInstance().logOut(); //Disconnect from google using LoginManager => Might have a logout issue...
-                goToLoginScreen();
-                finish();
+                Log.wtf("Facebook email: ", email);
+                Log.wtf("Facebook uid: ", uid);
+                Log.wtf("Facebook name", name);
+
+            } else {
+                //goToLoginScreen();
             }
-        });
 
     }
+
+    private void logoutFromAll(){
+        FirebaseAuth.getInstance().signOut(); //Disconnect from Facebook using FirebaseAuth service
+        LoginManager.getInstance().logOut(); //Disconnect from google using LoginManager => Might have a logout issue...
+        goToLoginScreen();
+        finish();
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.item_logout:
+                logoutFromAll();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
     @Override
     public void onResume() {
         super.onResume();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
 
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     class PagerAdapter extends FragmentPagerAdapter {
 
@@ -158,11 +166,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
             switch (position) {
                 case 0:
-                    return new BlankFragment();
+                    return new ListFragment();
                 case 1:
-                    return new BlankFragment();
+                    return new ListFragment();
                 case 2:
-                    return new BlankFragment();
+                    return new ListFragment();
             }
 
             return null;
@@ -204,6 +212,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
 
     private void handleSignInResult(GoogleSignInResult result) {
+
+        Log.wtf("MainActivity ---> ", "handleSignInResult : " + result.isSuccess());
+
         if(result.isSuccess()){
             GoogleSignInAccount account = result.getSignInAccount();
             nameView.setText("Google: " + account.getEmail());

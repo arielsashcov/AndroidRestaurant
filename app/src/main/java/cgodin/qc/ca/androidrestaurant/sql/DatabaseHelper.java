@@ -15,7 +15,7 @@ import cgodin.qc.ca.androidrestaurant.model.User;
 
 public class DatabaseHelper extends SQLiteOpenHelper{
 
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NAME = "MyDatabase.db";
     private static final String TABLE_USER = "User";
     private static final String COLUMN_USER_ID = "user_id";

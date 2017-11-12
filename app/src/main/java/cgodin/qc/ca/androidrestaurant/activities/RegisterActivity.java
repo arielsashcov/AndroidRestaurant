@@ -112,7 +112,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 user.setUtype(1); // 1 = Normal user
                 user.setUid(null);
                 user.setName( etName.getText().toString().trim() );
-                user.setEmail( etEmail.getText().toString().trim() );
+                user.setEmail( etEmail.getText().toString().trim().toLowerCase() );
                 user.setPassword( etPassword.getText().toString().trim() );
 
                 databaseHelper.addUser(user);

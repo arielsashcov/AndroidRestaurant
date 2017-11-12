@@ -14,9 +14,9 @@ import cgodin.qc.ca.androidrestaurant.R;
  * Created by Ariel S on 2017-11-06.
  */
 
-public class BlankFragment extends Fragment {
+public class ListFragment extends Fragment {
 
-    public BlankFragment() {
+    public ListFragment() {
         // Required empty public constructor
     }
 
@@ -29,10 +29,11 @@ public class BlankFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_blank, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_list, container, false);
 
         RecyclerView rv = rootView.findViewById(R.id.rv_recycler_view);
         rv.setHasFixedSize(true);
+
         MyAdapter adapter = new MyAdapter(new String[]{"Restaurant 1", "Restaurant 2", "Restaurant 3", "Restaurant 4", "Restaurant 5" , "Restaurant 6" , "Restaurant 7", "Restaurant 8", "Restaurant 9", "Restaurant 10"});
 
         rv.setAdapter(adapter);
