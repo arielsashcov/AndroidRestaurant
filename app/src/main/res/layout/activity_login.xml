@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nestedScrollViewLogin"
+    android:background="@color/colorPrimaryDark"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="activities.LoginActivity"
+    android:padding="20dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- LOGO -->
+        <ImageView
+           android:id="@+id/logo"
+           android:layout_width="150dp"
+           android:layout_height="150dp"
+           android:layout_gravity="center_horizontal"
+           android:layout_marginTop="40dp"
+           android:src="@drawable/logo" />
+
+        <!-- EMAIL -->
+        <EditText
+           android:id="@+id/etLoginEmail"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="40dp"
+           android:inputType="textEmailAddress"
+           android:hint="@string/hint_email"
+           android:textColorHint="@color/colorTextHint"
+           android:maxLines="1"
+           android:textColor="@color/colorText" />
+
+        <!-- PASSWORD -->
+        <EditText
+           android:id="@+id/etLoginPassword"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:inputType="textPassword"
+           android:hint="@string/hint_password"
+           android:textColorHint="@color/colorTextHint"
+           android:maxLines="1"
+           android:textColor="@color/colorText" />
+
+        <!-- LOGIN -->
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:textColor="@color/colorText"
+            android:background="@color/colorTextHint"
+            android:text="@string/text_login" />
+
+
+        <!-- FACEBOOK LOGIN -->
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/btnLoginFacebook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="12dp"
+            android:layout_marginTop="10dp" />
+
+        <!-- GOOGLE LOGIN -->
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btnLoginGoogle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            />
+
+
+        <!-- REGISTER LINK -->
+        <TextView
+           android:id="@+id/tvRegisterLink"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="30dp"
+           android:gravity="center"
+           android:text="@string/text_not_member"
+           android:textSize="16sp"
+           android:textColor="@color/colorText"
+           android:clickable="true"/>
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Restaurant Finder</string>
+
+    <string name="hint_name">Name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm password</string>
+
+    <string name="text_login">Login</string>
+    <string name="text_register">Register</string>
+    <string name="text_not_member">No account yet? Create one</string>
+    <string name="text_already_member">Already a member? Login</string>
+
+    <string name="success_message">Registration successful!</string>
+    <string name="success_logging_in">Logging in...</string>
+
+    <string name="error_message_name">Enter full name</string>
+    <string name="error_message_email">Enter valid email</string>
+    <string name="error_message_password">Enter password</string>
+    <string name="error_email_exists">Email already exists!</string>
+    <string name="error_password_match">Password does not match!</string>
+    <string name="error_valid_email_password">Wrong email or password!</string>
+    <string name="error_logging_in">Error logging in!</string>
+
+    <string name="facebook_app_id">128912617810213</string>
+    <string name="fb_login_protocol_scheme">fb128912617810213</string>
+    <string name="title_activity_main2">UserProfile</string>
+    <string name="text_logout">Logout</string>
+</resources>
