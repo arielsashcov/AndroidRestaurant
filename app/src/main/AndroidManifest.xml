@@ -59,6 +59,8 @@
             android:name=".activities.RegisterActivity"
             android:screenOrientation="portrait" />
 
+        <!-- https://developers.google.com/places/web-service/search : AIzaSyABNpwVRjWbPr8zHc5-ZKa8yuLffZmVKKE -->
+
     </application>
 
 </manifest>
