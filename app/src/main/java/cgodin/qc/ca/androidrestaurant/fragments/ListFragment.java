@@ -1,4 +1,4 @@
-package cgodin.qc.ca.androidrestaurant.activities;
+package cgodin.qc.ca.androidrestaurant.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import cgodin.qc.ca.androidrestaurant.R;
+import cgodin.qc.ca.androidrestaurant.adapters.MyAdapter;
 
 /**
  * Created by Ariel S on 2017-11-06.
