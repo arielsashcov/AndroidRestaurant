@@ -26,28 +26,24 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
+    //Dependency for FirebaseAuth
 
+    //Dependency for Facebook sign-in
+
+    //Dependency for Google sign-in
+    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:26.0.0-alpha1'
     compile 'com.android.support:cardview-v7:26.0.0-alpha1'
     compile 'com.android.support:recyclerview-v7:26.0.0-alpha1'
-
-    //Dependency for FirebaseAuth
     compile 'com.google.firebase:firebase-core:11.0.4'
     compile 'com.google.firebase:firebase-auth:11.0.4'
-
-    //Dependency for Facebook sign-in
     compile 'com.facebook.android:facebook-android-sdk:4.18.0'
-
-    //Dependency for Google sign-in
     compile 'com.google.android.gms:play-services-auth:11.0.4'
 
     // Dependency for google places
-    compile 'com.google.android.gms:play-services-maps:11.0.4'
-    compile 'com.google.android.gms:play-services-places:11.0.4'
     compile 'com.google.android.gms:play-services:11.0.4'
-    compile 'com.google.android.gms:play-services-location:11.0.4'
+    compile 'com.android.support:support-v4:26.+'
+    testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

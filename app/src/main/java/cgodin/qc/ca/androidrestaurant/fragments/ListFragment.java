@@ -1,7 +1,7 @@
-package cgodin.qc.ca.androidrestaurant.activities;
+package cgodin.qc.ca.androidrestaurant.fragments;
 
-import android.support.v4.app.Fragment; // DO NOT FORGET TO CHANGE import android.app.Fragment; TO THIS IMPORT. GARBAGE.
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import cgodin.qc.ca.androidrestaurant.R;
+import cgodin.qc.ca.androidrestaurant.adapters.MyAdapter;
 
 /**
  * Created by Ariel S on 2017-11-06.

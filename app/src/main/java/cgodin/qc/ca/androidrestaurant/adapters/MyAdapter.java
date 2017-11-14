@@ -1,18 +1,15 @@
-package cgodin.qc.ca.androidrestaurant.activities;
+package cgodin.qc.ca.androidrestaurant.adapters;
 
-import android.content.ClipData;
 import android.content.Context;
-import android.database.Observable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+<<<<<<< HEAD:app/src/main/java/cgodin/qc/ca/androidrestaurant/activities/MyAdapter.java
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
 
@@ -23,6 +20,8 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 
+=======
+>>>>>>> 6e841b26238ba48a864b06ed65d77e58a57cb135:app/src/main/java/cgodin/qc/ca/androidrestaurant/adapters/MyAdapter.java
 import cgodin.qc.ca.androidrestaurant.R;
 
 /**
