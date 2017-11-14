@@ -43,5 +43,11 @@ dependencies {
 
     //Dependency for Google sign-in
     compile 'com.google.android.gms:play-services-auth:11.0.4'
+
+    // Dependency for google places
+    compile 'com.google.android.gms:play-services-maps:11.0.4'
+    compile 'com.google.android.gms:play-services-places:11.0.4'
+    compile 'com.google.android.gms:play-services:11.0.4'
+    compile 'com.google.android.gms:play-services-location:11.0.4'
 }
 apply plugin: 'com.google.gms.google-services'

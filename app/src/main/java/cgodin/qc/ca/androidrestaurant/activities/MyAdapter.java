@@ -13,6 +13,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.Places;
+
+
+
+import com.google.android.gms.location.places.*;
+import android.os.Bundle;
+
 import java.util.ArrayList;
 
 import cgodin.qc.ca.androidrestaurant.R;
@@ -26,6 +34,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private String[] mDataset;
     private RecyclerView mRecyclerView;
     private Context mContext;
+
 
 
 
