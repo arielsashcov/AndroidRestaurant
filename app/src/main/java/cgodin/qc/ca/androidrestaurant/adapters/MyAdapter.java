@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-<<<<<<< HEAD:app/src/main/java/cgodin/qc/ca/androidrestaurant/activities/MyAdapter.java
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
 
@@ -20,8 +19,6 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 
-=======
->>>>>>> 6e841b26238ba48a864b06ed65d77e58a57cb135:app/src/main/java/cgodin/qc/ca/androidrestaurant/adapters/MyAdapter.java
 import cgodin.qc.ca.androidrestaurant.R;
 
 /**

@@ -256,6 +256,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void handleSignInResult(GoogleSignInResult result) {
         if(result.isSuccess()){
 
+            Log.e("LoginActivity", "Google handSignInResult == true");
+
             // Create a new user if he doesn't already exist...
             if(!databaseHelper.checkUid(result.getSignInAccount().getId())){
                 //Create a google user
@@ -272,6 +274,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Log.wtf("LoginActivity", "Google name:"+result.getSignInAccount().getDisplayName());
             nextActivity();
         }else{
+            Log.e("LoginActivity", "Google handSignInResult == false");
             Utilities.makeSnackbar(currentView, getString(R.string.error_logging_in),getColor(R.color.colorAccent), getColor(R.color.colorText) );
             Utilities.hideSoftKeyboard(LoginActivity.this);
         }
