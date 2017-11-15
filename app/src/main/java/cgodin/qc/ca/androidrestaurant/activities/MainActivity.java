@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private ArrayList<Restaurant> getRestaurantsList(){
 
-        ArrayList<Restaurant> restaurantList = new ArrayList<Restaurant>();
+        final ArrayList<Restaurant> restaurantList = new ArrayList<Restaurant>();
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                             final String LONGTITUDE = "";
                             final String LATITUDE = "";
 
-
+                            final String wtv;
 
                             AsyncHttpClient placeSearch = new AsyncHttpClient();
                             placeSearch.get(
@@ -178,12 +178,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                                             }
                                                         });
 
-                                                        //Restaurant restaurant = new Restaurant(formatted_address,name,rating,place_id,photo_reference,img_link,place_url);
+                                                        Restaurant restaurant = new Restaurant(formatted_address,name,rating,place_id,photo_reference,img_link,"","");
+                                                        restaurantList.add(restaurant);
 
                                                     }
 
 
-                                                    //Log.i("InfoMapActivity ", "restaurant address " + f3.get("formatted_address"));
+                                                    Log.i("InfoMapActivity ", "restaurant address " + resultsJsonArray.get(0).getAsJsonObject().get("formatted_address"));
                                                 }
 
                                             }
@@ -199,6 +200,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     }
 
                 });
+
+        for (int i = 0; i < restaurantList.size(); i++){
+            Log.i("InfoMapActivity ", "restaurant array lst: " + restaurantList.get(i));
+        }
 
         return restaurantList;
     }
