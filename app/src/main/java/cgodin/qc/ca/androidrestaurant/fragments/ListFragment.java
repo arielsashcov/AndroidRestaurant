@@ -25,9 +25,6 @@ import cgodin.qc.ca.androidrestaurant.adapters.MyAdapter;
 
 public class ListFragment extends Fragment {
 
-    // LocationService
-    private FusedLocationProviderClient mFusedLocationClient;
-
     public ListFragment() {
         // Required empty public constructor
     }

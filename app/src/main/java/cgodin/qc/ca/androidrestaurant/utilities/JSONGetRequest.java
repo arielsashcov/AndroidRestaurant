@@ -62,24 +62,26 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
+
+            locationTrack = new LocationTrack(context);
+
+
+            if (locationTrack.canGetLocation()) {
+
+            /*double longitude = locationTrack.getLongitude();
+            double latitude = locationTrack.getLatitude();*/
+
+                LONGTITUDE = Double.toString(locationTrack.getLongitude());
+                LATITUDE = Double.toString(locationTrack.getLatitude());
+
+                //Toast.makeText(context, "Latitude:" + LATITUDE + "\nLongitude: " + LONGTITUDE, Toast.LENGTH_SHORT).show();
+
+                Log.e("JSONGetRequest ", "Latitude:" + LATITUDE + "\nLongitude: " + LONGTITUDE);
+            } else {
+
+                locationTrack.showSettingsAlert();
+            }
         }
-
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
-        /*mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(context, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-
-                            // Logic to handle location object
-
-                            Log.e("InfoMapActivity ", "location: " + location.toString());
-
-                        }
-                    }
-
-                });*/
 
         locationTrack = new LocationTrack(context);
 
