@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -36,25 +37,29 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.TextHttpResponseHandler;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 import cgodin.qc.ca.androidrestaurant.R;
 import cgodin.qc.ca.androidrestaurant.fragments.ListFragment;
 import cgodin.qc.ca.androidrestaurant.model.Restaurant;
-import cz.msebera.android.httpclient.Header;
+import cgodin.qc.ca.androidrestaurant.utilities.JSONGetRequest;
 
 /**
  * Created by Ariel S on 2017-10-31.
@@ -66,6 +71,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private TextView nameView;
     private static final int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
+    public ArrayList<Restaurant> restaurantList = new ArrayList<Restaurant>();
+
     // LocationService
     private FusedLocationProviderClient mFusedLocationClient;
 
@@ -74,9 +81,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
 
 
-    private ArrayList<Restaurant> getRestaurantsList(){
+    public ArrayList<Restaurant> getRestaurantsList(){
 
-        final ArrayList<Restaurant> restaurantList = new ArrayList<Restaurant>();
+        ArrayList<Restaurant> restaurantList = new ArrayList<Restaurant>();
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -88,6 +95,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             // for ActivityCompat#requestPermissions for more details.
         }
 
+        //AsyncTask<String, String, JSONObject> asyncTask = new JSONGetRequest();
+
+        //asyncTask.execute();
+        restaurantList = JSONGetRequest.restaurantList;
+
+
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mFusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -95,115 +108,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     public void onSuccess(Location location) {
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
+
                             // Logic to handle location object
 
-                            final String API_KEY = "AIzaSyABNpwVRjWbPr8zHc5-ZKa8yuLffZmVKKE";
-                            final String RADIUS = "5000";
-                            final String LONGTITUDE = "";
-                            final String LATITUDE = "";
+                            Log.i("InfoMapActivity ", "location: " + location.toString());
 
-                            final String wtv;
-
-                            AsyncHttpClient placeSearch = new AsyncHttpClient();
-                            placeSearch.get(
-                                    "https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurant&location=42.3675294,-71.186966&radius=" + RADIUS + "&key=" + API_KEY,
-                                    new TextHttpResponseHandler() {
-                                        @Override
-                                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-
-                                        }
-
-                                        @Override
-                                        public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                                            Gson gson = new GsonBuilder().create();
-
-                                            //Log.i("InfoMapActivity ", "" + responseString);
-
-                                            /*JSONParser parser = new JSONParser();
-                                            JSONObject json = (JSONObject) parser.parse(stringToParse);*/
-
-                                            JsonParser parser = new JsonParser();
-
-                                            JsonElement placeSearchJsonResult = parser.parse(responseString);
-
-                                            if(placeSearchJsonResult.isJsonObject()){
-                                                JsonObject jsonObject = placeSearchJsonResult.getAsJsonObject();
-
-                                                JsonElement resultsJson = jsonObject.get("results");
-
-                                                if(resultsJson.isJsonArray()){
-                                                    JsonArray resultsJsonArray = resultsJson.getAsJsonArray();
-
-
-                                                    for (int i = 0; i < resultsJsonArray.size(); i++){
-
-                                                        JsonObject restaurantJsonObject = resultsJsonArray.get(i).getAsJsonObject();
-
-                                                        String formatted_address = restaurantJsonObject.get("formatted_address").getAsString();
-                                                        String name = restaurantJsonObject.get("name").getAsString();
-                                                        double rating = restaurantJsonObject.get("rating").getAsDouble();
-                                                        String place_id = restaurantJsonObject.get("place_id").getAsString();
-                                                        String photo_reference = restaurantJsonObject.get("photo_reference").getAsString();
-                                                        String img_link = restaurantJsonObject.get("photos").getAsJsonArray().getAsJsonObject().get("photo_reference").getAsString();
-
-                                                        AsyncHttpClient placeDetail = new AsyncHttpClient();
-
-                                                        placeDetail.get(
-                                                                "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + place_id + "&key=" + API_KEY,
-                                                                new TextHttpResponseHandler() {
-
-                                                            @Override
-                                                            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-
-                                                            }
-
-                                                            @Override
-                                                            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                                                                JsonParser parser = new JsonParser();
-
-                                                                JsonElement placeDetailJsonResult = parser.parse(responseString);
-
-                                                                if(placeDetailJsonResult.isJsonObject()){
-
-                                                                    JsonObject jsonObject = placeDetailJsonResult.getAsJsonObject();
-
-                                                                    JsonObject resultsJson = jsonObject.get("results").getAsJsonObject();
-
-                                                                    String formatted_phone_number = resultsJson.get("formatted_phone_number").getAsString();
-                                                                    String place_url = resultsJson.get("url").getAsString();
-
-                                                                }
-
-
-                                                            }
-                                                        });
-
-                                                        Restaurant restaurant = new Restaurant(formatted_address,name,rating,place_id,photo_reference,img_link,"","");
-                                                        restaurantList.add(restaurant);
-
-                                                    }
-
-
-                                                    Log.i("InfoMapActivity ", "restaurant address " + resultsJsonArray.get(0).getAsJsonObject().get("formatted_address"));
-                                                }
-
-                                            }
-
-
-
-                                            //Log.i("InfoMapActivity ", "restaurant object " + restaurant);
-
-                                        }
-
-                                    });
                         }
                     }
 
                 });
-
-        for (int i = 0; i < restaurantList.size(); i++){
-            Log.i("InfoMapActivity ", "restaurant array lst: " + restaurantList.get(i));
-        }
 
         return restaurantList;
     }
