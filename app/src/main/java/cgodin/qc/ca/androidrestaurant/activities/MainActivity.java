@@ -95,13 +95,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             // for ActivityCompat#requestPermissions for more details.
         }
 
-        //AsyncTask<String, String, JSONObject> asyncTask = new JSONGetRequest();
+        new JSONGetRequest(this).execute();
 
-        //asyncTask.execute();
-        restaurantList = JSONGetRequest.restaurantList;
+        //restaurantList = JSONGetRequest.restaurantList;
+
+        for (int i = 0; i < restaurantList.size(); i++){
+            Log.e("InfoMapActivity ", "restaurantList.....: " + restaurantList.get(i));
+        }
 
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        /*mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mFusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
@@ -111,12 +114,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
                             // Logic to handle location object
 
-                            Log.i("InfoMapActivity ", "location: " + location.toString());
+                            Log.e("InfoMapActivity ", "location: " + location.toString());
 
                         }
                     }
 
-                });
+                });*/
 
         return restaurantList;
     }
@@ -186,6 +189,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             }
 
         getRestaurantsList();
+
+
 
     }
 

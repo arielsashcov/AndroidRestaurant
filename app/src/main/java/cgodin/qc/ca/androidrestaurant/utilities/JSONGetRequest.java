@@ -1,8 +1,19 @@
 package cgodin.qc.ca.androidrestaurant.utilities;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -19,6 +30,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import cgodin.qc.ca.androidrestaurant.activities.MainActivity;
 import cgodin.qc.ca.androidrestaurant.model.Restaurant;
 
 /**
@@ -27,12 +39,74 @@ import cgodin.qc.ca.androidrestaurant.model.Restaurant;
 
 public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
 
-    public static ArrayList<Restaurant> restaurantList = new ArrayList<Restaurant>();
+    public ArrayList<Restaurant> restaurantList = new ArrayList<Restaurant>();
+    private Context context;
 
     String API_KEY = "AIzaSyABNpwVRjWbPr8zHc5-ZKa8yuLffZmVKKE";
     String RADIUS = "5000";
-    String LONGTITUDE = "45.503524";
-    String LATITUDE = "-73.816513";
+    String LATITUDE = "45.503524";
+    String LONGTITUDE = "-73.816513";
+
+    // LocationService
+    private FusedLocationProviderClient mFusedLocationClient;
+
+    LocationTrack locationTrack;
+
+    public JSONGetRequest(Context context){
+        this.context = context;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+        }
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
+        /*mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(context, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+
+                            // Logic to handle location object
+
+                            Log.e("InfoMapActivity ", "location: " + location.toString());
+
+                        }
+                    }
+
+                });*/
+
+        locationTrack = new LocationTrack(context);
+
+
+        if (locationTrack.canGetLocation()) {
+
+            double longitude = locationTrack.getLongitude();
+            double latitude = locationTrack.getLatitude();
+
+            /*LONGTITUDE = Double.toString(locationTrack.getLongitude());
+            LATITUDE = Double.toString(locationTrack.getLatitude());*/
+
+            Toast.makeText(context, "Longitude:" + Double.toString(longitude) + "\nLatitude:" + Double.toString(latitude), Toast.LENGTH_SHORT).show();
+
+            Log.e("JSONGetRequest ", "Latitude:" + Double.toString(latitude) + "\nLongitude: " + Double.toString(longitude));
+        } else {
+
+            locationTrack.showSettingsAlert();
+        }
+
+    }
 
     @Override
     protected JSONObject doInBackground(String... strings) {
@@ -42,7 +116,7 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
         try {
 
             // Creating a Request
-            URL urlPlaceSearch = new URL("https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurant&location=" + LONGTITUDE + "," + LATITUDE + "42.3675294,-71.186966&radius=" + RADIUS + "&key=" + API_KEY);
+            URL urlPlaceSearch = new URL("https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurant&location=" + LATITUDE + "," + LONGTITUDE + "&radius=" + RADIUS + "&key=" + API_KEY);
             con = (HttpURLConnection) urlPlaceSearch.openConnection();
             con.setRequestMethod("GET");
 
@@ -85,7 +159,10 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
 
                         String formatted_address = restaurantJsonObject.get("formatted_address").getAsString();
                         String name = restaurantJsonObject.get("name").getAsString();
-                        double rating = restaurantJsonObject.get("rating").getAsDouble();
+                        double rating = -1;
+                        if (restaurantJsonObject.has("rating")){
+                            rating = restaurantJsonObject.get("rating").getAsDouble();
+                        }
                         String place_id = restaurantJsonObject.get("place_id").getAsString();
                         String photo_reference = "";
 
@@ -152,14 +229,14 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
         super.onPostExecute(jsonObject);
 
         for (int i = 0; i < restaurantList.size(); i++){
-            Log.i("InfoMapActivity ", "Restaurant nbr: " + i + " " + restaurantList.get(i));
+            Log.e("JSONGetRequest ", "Restaurant nbr: " + i + " " + restaurantList.get(i));
         }
 
-        try {
+        /*try {
             Log.e("OnPostExecute ..... ", jsonObject.get("results").toString());
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public ArrayList<Restaurant> getRestaurantArrayList(){
@@ -197,4 +274,5 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
     public void setLATITUDE(String LATITUDE) {
         this.LATITUDE = LATITUDE;
     }
+
 }
