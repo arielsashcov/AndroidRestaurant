@@ -29,10 +29,10 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
 
     public static ArrayList<Restaurant> restaurantList = new ArrayList<Restaurant>();
 
-    String API_KEY = "AIzaSyABNpwVRjWbPr8zHc5-ZKa8yuLffZmVKKE";
-    String RADIUS = "5000";
-    String LONGTITUDE = "45.503524";
-    String LATITUDE = "-73.816513";
+    private String API_KEY = "AIzaSyABNpwVRjWbPr8zHc5-ZKa8yuLffZmVKKE";
+    private String RADIUS = "5000";
+    private String LATITUDE = "-73.816513";
+    private String LONGTITUDE = "45.503524";
 
     @Override
     protected JSONObject doInBackground(String... strings) {
@@ -42,7 +42,7 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
         try {
 
             // Creating a Request
-            URL urlPlaceSearch = new URL("https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurant&location=" + LONGTITUDE + "," + LATITUDE + "42.3675294,-71.186966&radius=" + RADIUS + "&key=" + API_KEY);
+            URL urlPlaceSearch = new URL("https://maps.googleapis.com/maps/api/place/textsearch/json?query=restaurant&location=" + LATITUDE + "," + LONGTITUDE + "&radius=" + RADIUS + "&key=" + API_KEY);
             con = (HttpURLConnection) urlPlaceSearch.openConnection();
             con.setRequestMethod("GET");
 
