@@ -3,19 +3,12 @@ package cgodin.qc.ca.androidrestaurant.utilities;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.AsyncTask;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -32,7 +25,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-import cgodin.qc.ca.androidrestaurant.activities.MainActivity;
 import cgodin.qc.ca.androidrestaurant.model.Restaurant;
 
 /**
@@ -46,8 +38,8 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
 
     String API_KEY = "AIzaSyABNpwVRjWbPr8zHc5-ZKa8yuLffZmVKKE";
     String RADIUS = "5000";
-    String LATITUDE = "45.503524";
-    String LONGTITUDE = "-73.816513";
+    String LATITUDE = "";
+    String LONGTITUDE = "";
 
     // LocationService
     private FusedLocationProviderClient mFusedLocationClient;
@@ -94,15 +86,15 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
 
         if (locationTrack.canGetLocation()) {
 
-            double longitude = locationTrack.getLongitude();
-            double latitude = locationTrack.getLatitude();
+            /*double longitude = locationTrack.getLongitude();
+            double latitude = locationTrack.getLatitude();*/
 
-            /*LONGTITUDE = Double.toString(locationTrack.getLongitude());
-            LATITUDE = Double.toString(locationTrack.getLatitude());*/
+            LONGTITUDE = Double.toString(locationTrack.getLongitude());
+            LATITUDE = Double.toString(locationTrack.getLatitude());
 
-            Toast.makeText(context, "Longitude:" + Double.toString(longitude) + "\nLatitude:" + Double.toString(latitude), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "Latitude:" + LATITUDE + "\nLongitude: " + LONGTITUDE, Toast.LENGTH_SHORT).show();
 
-            Log.e("JSONGetRequest ", "Latitude:" + Double.toString(latitude) + "\nLongitude: " + Double.toString(longitude));
+            Log.e("JSONGetRequest ", "Latitude:" + LATITUDE + "\nLongitude: " + LONGTITUDE);
         } else {
 
             locationTrack.showSettingsAlert();
@@ -200,7 +192,11 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
                         JsonObject placeDetailsJson = parser.parse(content2.toString()).getAsJsonObject().get("result").getAsJsonObject();
 
                         String place_url = placeDetailsJson.get("url").getAsString();
-                        String formatted_phone_number = placeDetailsJson.get("formatted_phone_number").getAsString();
+
+                        String formatted_phone_number = "";
+                        if (placeDetailsJson.has("formatted_phone_number")){
+                            formatted_phone_number = placeDetailsJson.get("formatted_phone_number").getAsString();
+                        }
 
                         String img_api_url = "";
                         if (photo_reference != ""){
