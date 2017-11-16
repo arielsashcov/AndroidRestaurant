@@ -54,5 +54,8 @@ dependencies {
     compile 'net.schmizz:sshj:0.10.0'
 
     compile 'com.loopj.android:android-async-http:1.4.9'
+
+    // Dependency for Picasso
+    compile 'com.squareup.picasso:picasso:2.5.0'
 }
 apply plugin: 'com.google.gms.google-services'

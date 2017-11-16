@@ -97,10 +97,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         new JSONGetRequest(this).execute();
 
-        //restaurantList = JSONGetRequest.restaurantList;
+        //lstRestaurants = JSONGetRequest.lstRestaurants;
 
         for (int i = 0; i < restaurantList.size(); i++){
-            Log.e("InfoMapActivity ", "restaurantList.....: " + restaurantList.get(i));
+            Log.e("InfoMapActivity ", "lstRestaurants.....: " + restaurantList.get(i));
         }
 
 

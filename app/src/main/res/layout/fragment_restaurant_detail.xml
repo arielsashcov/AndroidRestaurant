@@ -2,12 +2,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cgodin.qc.ca.androidrestaurant.fragments.RestaurantDetailFragment">
+    tools:context="cgodin.qc.ca.androidrestaurant.fragments.RestaurantDetailFragment"
+    android:background="#4f4f">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RatingBar
+            android:id="@+id/listrating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="0.1"
+            android:rating="0"
+            android:visibility="visible"
+            android:isIndicator="true"
+            android:layout_alignParentEnd="true"
+            style="?android:attr/ratingBarStyleIndicator"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:text="Name"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/img_restaurant"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/noimage"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/img_restaurant"
+            android:layout_below="@+id/listrating"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:text="" />
+    </RelativeLayout>
 
 </FrameLayout>

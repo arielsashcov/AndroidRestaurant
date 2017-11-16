@@ -18,15 +18,14 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
 
-
-
             <RatingBar
                 android:id="@+id/listrating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:numStars="5"
                 android:stepSize="0.1"
-                android:rating="4.5"
+                android:rating="0"
+                android:visibility="visible"
                 android:isIndicator="true"
                 android:layout_alignParentEnd="true"
                 style="?android:attr/ratingBarStyleIndicator"
@@ -49,7 +48,7 @@
                 android:id="@+id/img_restaurant"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/capital"
+                android:src="@drawable/noimage"
                 android:layout_below="@+id/tv_name"
                 android:layout_marginStart="4dp"
                 android:layout_marginBottom="4dp"
@@ -67,7 +66,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginLeft="10dp"
-                android:text="15745 Pierrefonds Blvd, Pierrefonds, QC H9H 3P6" />
+                android:text="" />
 
 
 

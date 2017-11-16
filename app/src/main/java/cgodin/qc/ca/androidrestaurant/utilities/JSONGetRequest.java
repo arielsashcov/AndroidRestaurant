@@ -8,7 +8,6 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -33,7 +32,7 @@ import cgodin.qc.ca.androidrestaurant.model.Restaurant;
 
 public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
 
-    public ArrayList<Restaurant> restaurantList = new ArrayList<Restaurant>();
+    public static ArrayList<Restaurant> lstRestaurants = new ArrayList<Restaurant>();
     private Context context;
 
     String API_KEY = "AIzaSyABNpwVRjWbPr8zHc5-ZKa8yuLffZmVKKE";
@@ -73,8 +72,6 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
 
                 LONGTITUDE = Double.toString(locationTrack.getLongitude());
                 LATITUDE = Double.toString(locationTrack.getLatitude());
-
-                //Toast.makeText(context, "Latitude:" + LATITUDE + "\nLongitude: " + LONGTITUDE, Toast.LENGTH_SHORT).show();
 
                 Log.e("JSONGetRequest ", "Latitude:" + LATITUDE + "\nLongitude: " + LONGTITUDE);
             } else {
@@ -207,7 +204,7 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
 
                         Restaurant restaurant = new Restaurant(formatted_address,name,rating,place_id,photo_reference,img_api_url,place_url,formatted_phone_number);
 
-                        restaurantList.add(restaurant);
+                        lstRestaurants.add(restaurant);
 
                     }
                 }
@@ -228,8 +225,8 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
     protected void onPostExecute(JSONObject jsonObject) {
         super.onPostExecute(jsonObject);
 
-        for (int i = 0; i < restaurantList.size(); i++){
-            Log.e("JSONGetRequest ", "Restaurant nbr: " + i + " " + restaurantList.get(i));
+        for (int i = 0; i < lstRestaurants.size(); i++){
+            Log.e("JSONGetRequest ", "Restaurant nbr: " + i + " " + lstRestaurants.get(i));
         }
 
         /*try {
@@ -240,7 +237,7 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
     }
 
     public ArrayList<Restaurant> getRestaurantArrayList(){
-        return restaurantList;
+        return lstRestaurants;
     }
 
     public String getAPI_KEY() {
