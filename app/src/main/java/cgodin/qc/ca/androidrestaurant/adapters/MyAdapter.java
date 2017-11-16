@@ -24,6 +24,7 @@ import cgodin.qc.ca.androidrestaurant.model.Restaurant;
  * Created by Ariel S on 2017-11-06.
  */
 
+//..
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private ArrayList<Restaurant> mDataset;
