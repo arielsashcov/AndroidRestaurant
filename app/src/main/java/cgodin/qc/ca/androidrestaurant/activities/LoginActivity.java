@@ -44,6 +44,7 @@ import java.util.Arrays;
 import cgodin.qc.ca.androidrestaurant.R;
 import cgodin.qc.ca.androidrestaurant.model.User;
 import cgodin.qc.ca.androidrestaurant.sql.DatabaseHelper;
+import cgodin.qc.ca.androidrestaurant.utilities.JSONGetRequest;
 import cgodin.qc.ca.androidrestaurant.utilities.Utilities;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
@@ -86,7 +87,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         initObjects();  //initialize the objects
 
         /* Assuming at this step all views and objects are initialized */
-        printHashKey();
+        //printHashKey();
+        new JSONGetRequest(this).execute();
 
     }
 

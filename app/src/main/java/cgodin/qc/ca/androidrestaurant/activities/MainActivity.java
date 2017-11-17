@@ -47,7 +47,6 @@ import java.util.ArrayList;
 import cgodin.qc.ca.androidrestaurant.R;
 import cgodin.qc.ca.androidrestaurant.fragments.ListFragment;
 import cgodin.qc.ca.androidrestaurant.model.Restaurant;
-import cgodin.qc.ca.androidrestaurant.utilities.JSONGetRequest;
 
 /**
  * Created by Ariel S on 2017-10-31.
@@ -72,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new JSONGetRequest(this).execute();
+        //new JSONGetRequest(this).execute();
 
         // LocationService
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
