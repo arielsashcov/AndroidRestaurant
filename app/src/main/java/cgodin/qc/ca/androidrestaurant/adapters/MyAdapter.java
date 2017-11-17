@@ -32,8 +32,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private Context mContext;
 
 
-
-
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
@@ -49,7 +47,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public TextView mAddress;
         public ImageView mImageView;
         public RatingBar mRatingBar;
-
 
 
         public MyViewHolder(View view){
@@ -84,7 +81,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         final String element = String.valueOf(mDataset.get(position).getName());
 
-        holder.mTitle.setText(String.valueOf(mDataset.get(position).getName()));
+        holder.mTitle.setText(String.valueOf(position + ". " + mDataset.get(position).getName()));
         holder.mAddress.setText(String.valueOf(mDataset.get(position).getFormatted_address()));
 
         if (mDataset.get(position).getImg_link().isEmpty()) {
@@ -97,8 +94,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                     .into(holder.mImageView);
         }
 
-        holder.mRatingBar.setRating((float) mDataset.get(position).getRating());
-
+        if((float) mDataset.get(position).getRating() == -1){
+            holder.mRatingBar.setVisibility(View.INVISIBLE);
+        }else {
+            holder.mRatingBar.setRating((float) mDataset.get(position).getRating());
+        }
 
         holder.mCardView.setOnClickListener(new View.OnClickListener(){
 
@@ -110,10 +110,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             }
         });
 
+        holder.mCardView.invalidate();
+
     }
 
     @Override
     public int getItemCount() { return mDataset.size(); }
+
+    public void delete(int position){
+       // myList.remove(position);
+        notifyItemRemoved(position);
+    }
 
 
 }

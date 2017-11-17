@@ -32,6 +32,7 @@ import cgodin.qc.ca.androidrestaurant.model.Restaurant;
 
 public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
 
+    //Probleme!!! ---->
     public static ArrayList<Restaurant> lstRestaurants = new ArrayList<Restaurant>();
     private Context context;
 
@@ -53,9 +54,16 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
     protected void onPreExecute() {
         super.onPreExecute();
 
+        //lstRestaurants.clear();
+
+        //lstRestaurants = new ArrayList<Restaurant>();
+
+
+
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
             //                                          int[] grantResults)
@@ -104,8 +112,8 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
     @Override
     protected JSONObject doInBackground(String... strings) {
         JSONObject jsonObj = null;
-
         HttpURLConnection con = null;
+
         try {
 
             // Creating a Request
@@ -225,15 +233,13 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
     protected void onPostExecute(JSONObject jsonObject) {
         super.onPostExecute(jsonObject);
 
+        Log.e("OnPostExecute", "size: " + lstRestaurants.size());
+
         for (int i = 0; i < lstRestaurants.size(); i++){
             Log.e("JSONGetRequest ", "Restaurant nbr: " + i + " " + lstRestaurants.get(i));
         }
 
-        /*try {
-            Log.e("OnPostExecute ..... ", jsonObject.get("results").toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
+
     }
 
     public ArrayList<Restaurant> getRestaurantArrayList(){
