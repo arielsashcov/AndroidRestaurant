@@ -2,10 +2,9 @@ package cgodin.qc.ca.androidrestaurant.activities;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -15,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -23,6 +23,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,29 +39,14 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 import cgodin.qc.ca.androidrestaurant.R;
 import cgodin.qc.ca.androidrestaurant.fragments.ListFragment;
 import cgodin.qc.ca.androidrestaurant.model.Restaurant;
-import cgodin.qc.ca.androidrestaurant.utilities.JSONGetRequest;
 
 /**
  * Created by Ariel S on 2017-10-31.
@@ -79,62 +66,20 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     //TODO: Make methods for each logged user - divide code
 
-
-
-    public ArrayList<Restaurant> getRestaurantsList(){
-
-        ArrayList<Restaurant> restaurantList = new ArrayList<Restaurant>();
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-        }
-
-        new JSONGetRequest(this).execute();
-
-        //lstRestaurants = JSONGetRequest.lstRestaurants;
-
-        for (int i = 0; i < restaurantList.size(); i++){
-            Log.e("InfoMapActivity ", "lstRestaurants.....: " + restaurantList.get(i));
-        }
-
-
-        /*mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        mFusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-
-                            // Logic to handle location object
-
-                            Log.e("InfoMapActivity ", "location: " + location.toString());
-
-                        }
-                    }
-
-                });*/
-
-        return restaurantList;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //new JSONGetRequest(this).execute();
 
         // LocationService
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         requestPermission();
 
-        setTitle("Restaurant Finder");
+
+        setTitle("Restaurant Finder");//
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -152,6 +97,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
 
         nameView = (TextView) findViewById(R.id.nameeAndUsername);
+
+
 
         /*Normal user - retrieving sign-in information*/
         String emailFromIntent = getIntent().getStringExtra("EMAIL");
@@ -188,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 //goToLoginScreen();
             }
 
-        getRestaurantsList();
+
 
 
 
@@ -246,9 +193,49 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 logoutFromAll();
                 return true;
 
+            case R.id.change_radius:
+                showCustomDialogRadiusChange();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showCustomDialogRadiusChange(){
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle(R.string.change_radius);
+        alert.setMessage(R.string.text_select_value_km);
+
+        LinearLayout linear = new LinearLayout(this);
+
+        linear.setOrientation(LinearLayout.VERTICAL);
+        final NumberPicker numberPicker = new NumberPicker(this);
+        numberPicker.setMaxValue(50);
+        numberPicker.setMinValue(1);
+        numberPicker.setWrapSelectorWheel(true);
+
+        linear.addView(numberPicker);
+        alert.setView(linear);
+
+        alert.setPositiveButton("Set",new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog,int id)
+            {
+                Toast.makeText(getApplicationContext(), "Radius has changed to " + numberPicker.getValue() + "km",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        alert.setNegativeButton("Cancel",new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog,int id)
+            {
+                //do nothing...
+            }
+        });
+
+        alert.show();
     }
 
 
@@ -256,8 +243,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public void onResume() {
         super.onResume();
     }
-
-
 
 
     class PagerAdapter extends FragmentPagerAdapter {
@@ -279,12 +264,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         public Fragment getItem(int position) {
 
             switch (position) {
-                case 0:
+                case 0: //list of restaurants
                     return new ListFragment();
-                case 1:
+                case 1: //favorites
                     return new ListFragment();
-                case 2:
-                    return new ListFragment();
+
             }
 
             return null;

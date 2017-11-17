@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,8 @@ import cgodin.qc.ca.androidrestaurant.utilities.JSONGetRequest;
 public class ListFragment extends Fragment {
 
 
-    private ArrayList<Restaurant> lstRestaurants;
+    private ArrayList<Restaurant> lstRestaurants = null;
+    public MyAdapter adapter;
 
     public ListFragment() {
         // Required empty public constructor
@@ -38,6 +40,7 @@ public class ListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+
         lstRestaurants = JSONGetRequest.lstRestaurants;
 
         // Inflate the layout for this fragment
@@ -46,12 +49,17 @@ public class ListFragment extends Fragment {
         RecyclerView rv = rootView.findViewById(R.id.rv_recycler_view);
         rv.setHasFixedSize(true);
 
-        MyAdapter adapter = new MyAdapter(lstRestaurants);
+        adapter = new MyAdapter(lstRestaurants);
 
         rv.setAdapter(adapter);
+        rv.setVisibility(View.VISIBLE);
+
+        adapter.notifyDataSetChanged();
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(llm);
+
+        Log.e("onCreateView:", "adapter..");
 
         return rootView;
     }
