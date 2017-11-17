@@ -34,7 +34,7 @@ import cgodin.qc.ca.androidrestaurant.model.Restaurant;
 public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
 
     //Probleme!!! ---->
-    public static ArrayList<Restaurant> lstRestaurants = new ArrayList<Restaurant>();
+    public static ArrayList<Restaurant> lstRestaurants;
     private Context context;
 
     String API_KEY = "AIzaSyABNpwVRjWbPr8zHc5-ZKa8yuLffZmVKKE";
@@ -66,7 +66,7 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
 
         //lstRestaurants.clear();
 
-        //lstRestaurants = new ArrayList<Restaurant>();
+        lstRestaurants = new ArrayList<Restaurant>();
 
 
 
