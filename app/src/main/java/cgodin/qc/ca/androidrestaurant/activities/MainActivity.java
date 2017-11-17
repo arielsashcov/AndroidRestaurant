@@ -2,6 +2,7 @@ package cgodin.qc.ca.androidrestaurant.activities;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -21,6 +23,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -190,9 +194,49 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 logoutFromAll();
                 return true;
 
+            case R.id.change_radius:
+                showCustomDialogRadiusChange();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showCustomDialogRadiusChange(){
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle(R.string.change_radius);
+        alert.setMessage(R.string.text_select_value_km);
+
+        LinearLayout linear = new LinearLayout(this);
+
+        linear.setOrientation(LinearLayout.VERTICAL);
+        final NumberPicker numberPicker = new NumberPicker(this);
+        numberPicker.setMaxValue(50);
+        numberPicker.setMinValue(1);
+        numberPicker.setWrapSelectorWheel(true);
+
+        linear.addView(numberPicker);
+        alert.setView(linear);
+
+        alert.setPositiveButton("Set",new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog,int id)
+            {
+                Toast.makeText(getApplicationContext(), "Radius has changed to " + numberPicker.getValue() + "km",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        alert.setNegativeButton("Cancel",new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog,int id)
+            {
+                //do nothing...
+            }
+        });
+
+        alert.show();
     }
 
 
@@ -200,8 +244,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public void onResume() {
         super.onResume();
     }
-
-
 
 
     class PagerAdapter extends FragmentPagerAdapter {
@@ -223,12 +265,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         public Fragment getItem(int position) {
 
             switch (position) {
-                case 0:
+                case 0: //list of restaurants
                     return new ListFragment();
-                case 1:
+                case 1: //favorites
                     return new ListFragment();
-                case 2:
-                    return new ListFragment();
+
             }
 
             return null;

@@ -24,6 +24,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import cgodin.qc.ca.androidrestaurant.adapters.MyAdapter;
 import cgodin.qc.ca.androidrestaurant.model.Restaurant;
 
 /**
@@ -48,6 +49,15 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
 
     public JSONGetRequest(Context context){
         this.context = context;
+    }
+
+
+
+
+    @Override
+    protected void onProgressUpdate(String... values) {
+        super.onProgressUpdate(values);
+
     }
 
     @Override
@@ -233,14 +243,18 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
     protected void onPostExecute(JSONObject jsonObject) {
         super.onPostExecute(jsonObject);
 
+
         Log.e("OnPostExecute", "size: " + lstRestaurants.size());
+
+        MyAdapter adapter = new MyAdapter(lstRestaurants);
+        adapter.notifyDataSetChanged();
 
         for (int i = 0; i < lstRestaurants.size(); i++){
             Log.e("JSONGetRequest ", "Restaurant nbr: " + i + " " + lstRestaurants.get(i));
         }
 
-
     }
+
 
     public ArrayList<Restaurant> getRestaurantArrayList(){
         return lstRestaurants;

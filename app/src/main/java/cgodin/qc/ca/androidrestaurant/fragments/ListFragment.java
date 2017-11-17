@@ -24,6 +24,7 @@ public class ListFragment extends Fragment {
 
 
     private ArrayList<Restaurant> lstRestaurants = null;
+    public MyAdapter adapter;
 
     public ListFragment() {
         // Required empty public constructor
@@ -48,7 +49,7 @@ public class ListFragment extends Fragment {
         RecyclerView rv = rootView.findViewById(R.id.rv_recycler_view);
         rv.setHasFixedSize(true);
 
-        MyAdapter adapter = new MyAdapter(lstRestaurants);
+        adapter = new MyAdapter(lstRestaurants);
 
         rv.setAdapter(adapter);
         rv.setVisibility(View.VISIBLE);
