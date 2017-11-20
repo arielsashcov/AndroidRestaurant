@@ -45,6 +45,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 
 import cgodin.qc.ca.androidrestaurant.R;
+import cgodin.qc.ca.androidrestaurant.fragments.FavoritesFragment;
 import cgodin.qc.ca.androidrestaurant.fragments.ListFragment;
 import cgodin.qc.ca.androidrestaurant.model.Restaurant;
 
@@ -57,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private GoogleApiClient googleApiClient;
     private TextView nameView;
     private static final int REQUEST_CODE_ASK_PERMISSIONS = 123;
+
+    public static String strCurrentUserId = "";
+    public static int strCurrentUserType = -1;
 
     public ArrayList<Restaurant> restaurantList = new ArrayList<Restaurant>();
 
@@ -105,6 +109,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         if (emailFromIntent != null) {
             nameView.setText("Welcome " + emailFromIntent);
+            strCurrentUserId = getIntent().getStringExtra("EMAIL");
+            strCurrentUserType = 1;
         }
 
              /*Google user - retrieving sign-in information*/
@@ -125,6 +131,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 String email = user.getEmail();
                 String uid = user.getUid();
                 nameView.setText("Facebook: " + email);
+
+                strCurrentUserId = uid;
+                strCurrentUserType = 3;
 
 
                 Log.wtf("Facebook email: ", email);
@@ -316,9 +325,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         if(result.isSuccess()){
             GoogleSignInAccount account = result.getSignInAccount();
             nameView.setText("Google: " + account.getEmail());
+            strCurrentUserId = account.getId();
+            strCurrentUserType = 2;
             Log.wtf("Google email: ", account.getEmail());
             Log.wtf("Google uid: ", account.getId());
             Log.wtf("Google name", account.getDisplayName());
+
+
         }else{
            // goToLoginScreen();
         }

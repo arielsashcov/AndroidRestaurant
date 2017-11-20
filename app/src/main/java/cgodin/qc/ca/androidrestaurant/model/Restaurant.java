@@ -14,11 +14,13 @@ public class Restaurant {
     private String img_link;
     private String place_url;
     private String formatted_phone_number;
+    private String lat;
+    private String lng;
 
     public Restaurant() {
     }
 
-    public Restaurant(String formatted_address, String name, double rating, String place_id, String photo_reference, String img_link, String place_url, String formatted_phone_number) {
+    public Restaurant(String formatted_address, String name, double rating, String place_id, String photo_reference, String img_link, String place_url, String formatted_phone_number, String lat, String lng) {
         this.formatted_address = formatted_address;
         this.name = name;
         this.rating = rating;
@@ -27,6 +29,8 @@ public class Restaurant {
         this.img_link = img_link;
         this.place_url = place_url;
         this.formatted_phone_number = formatted_phone_number;
+        this.lat = lat;
+        this.lng = lng;
     }
 
     public String getFormatted_address() {
@@ -93,6 +97,22 @@ public class Restaurant {
         this.formatted_phone_number = formatted_phone_number;
     }
 
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
     @Override
     public String toString() {
         return "Restaurant{" +
@@ -104,6 +124,8 @@ public class Restaurant {
                 ", img_link='" + img_link + '\'' +
                 ", place_url='" + place_url + '\'' +
                 ", formatted_phone_number='" + formatted_phone_number + '\'' +
+                ", lat='" + lat + '\'' +
+                ", lng='" + lng + '\'' +
                 '}';
     }
 }

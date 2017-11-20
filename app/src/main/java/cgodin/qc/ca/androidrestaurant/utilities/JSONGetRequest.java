@@ -170,6 +170,8 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
 
                         String formatted_address = restaurantJsonObject.get("formatted_address").getAsString();
                         String name = restaurantJsonObject.get("name").getAsString();
+                        String lat = restaurantJsonObject.get("geometry").getAsJsonObject().get("location").getAsJsonObject().get("lat").getAsString();
+                        String lng = restaurantJsonObject.get("geometry").getAsJsonObject().get("location").getAsJsonObject().get("lng").getAsString();
                         double rating = -1;
                         if (restaurantJsonObject.has("rating")){
                             rating = restaurantJsonObject.get("rating").getAsDouble();
@@ -220,7 +222,7 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
                             img_api_url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + photo_reference + "&key=" + API_KEY;
                         }
 
-                        Restaurant restaurant = new Restaurant(formatted_address,name,rating,place_id,photo_reference,img_api_url,place_url,formatted_phone_number);
+                        Restaurant restaurant = new Restaurant(formatted_address,name,rating,place_id,photo_reference,img_api_url,place_url,formatted_phone_number,lat,lng);
 
                         lstRestaurants.add(restaurant);
 
