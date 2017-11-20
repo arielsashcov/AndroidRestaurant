@@ -23,8 +23,6 @@ public class Restaurant implements Parcelable{
     public Restaurant() {
     }
 
-
-
     public Restaurant(String formatted_address, String name, double rating, String place_id, String photo_reference, String img_link, String place_url, String formatted_phone_number, String lat, String lng) {
         this.formatted_address = formatted_address;
         this.name = name;
