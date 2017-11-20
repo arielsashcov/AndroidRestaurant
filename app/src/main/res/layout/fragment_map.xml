@@ -4,10 +4,12 @@
     android:layout_height="match_parent"
     tools:context="cgodin.qc.ca.androidrestaurant.fragments.MapFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/map_restaurants"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        />
+
 
 </FrameLayout>

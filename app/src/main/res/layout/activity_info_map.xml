@@ -3,15 +3,42 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/infoMapActivity"
-    android:background="@color/colorPrimaryDark"
+    android:background="#FFFFFF"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
     tools:context="cgodin.qc.ca.androidrestaurant.activities.InfoMapActivity">
 
 
 
 
+    <fragment
+        android:layout_width="395dp"
+        android:layout_height="300dp"
+        android:name="cgodin.qc.ca.androidrestaurant.fragments.RestaurantDetailFragment"
+        android:layout_weight="2"
+        android:id="@+id/fragment"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
+    <fragment
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:name="cgodin.qc.ca.androidrestaurant.fragments.MapFragment"
+        android:layout_weight="1"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/fragment"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
 
 
