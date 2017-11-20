@@ -2,6 +2,7 @@ package cgodin.qc.ca.androidrestaurant.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,7 +25,6 @@ import cgodin.qc.ca.androidrestaurant.model.Restaurant;
  * Created by Ariel S on 2017-11-06.
  */
 
-//..
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     private ArrayList<Restaurant> mDataset;
@@ -77,11 +77,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     //Associate data to each row
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position){
+    public void onBindViewHolder(MyViewHolder holder, final int position){
 
         final String element = String.valueOf(mDataset.get(position).getName());
 
-        holder.mTitle.setText(String.valueOf(position + ". " + mDataset.get(position).getName()));
+        holder.mTitle.setText(String.valueOf(mDataset.get(position).getName()));
         holder.mAddress.setText(String.valueOf(mDataset.get(position).getFormatted_address()));
 
         if (mDataset.get(position).getImg_link().isEmpty()) {
@@ -100,11 +100,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             holder.mRatingBar.setRating((float) mDataset.get(position).getRating());
         }
 
+        final Restaurant clickedRestaurant = mDataset.get(position);
+
         holder.mCardView.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, InfoMapActivity.class);
+                intent.putExtra("CURRENT_RESTAURANT", (Parcelable) clickedRestaurant);
                 mContext.startActivity(intent);
                 Toast.makeText(mContext, "Click on : " + element, Toast.LENGTH_SHORT).show();
             }

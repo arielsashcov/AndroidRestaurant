@@ -60,11 +60,13 @@
             android:name=".activities.RegisterActivity"
             android:screenOrientation="portrait" />
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyD4y_pi2plYU3dOQ8jpzyi-1ig_Syq-cjs"/>
+
         <!-- https://developers.google.com/places/web-service/search : AIzaSyABNpwVRjWbPr8zHc5-ZKa8yuLffZmVKKE -->
 
         <activity android:name=".activities.InfoMapActivity"></activity>
-
-
 
     </application>
 

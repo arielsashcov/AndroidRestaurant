@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private User user;
     private DatabaseHelper databaseHelper; //db
     private CallbackManager callbackManager; //fb
-    private GoogleApiClient googleApiClient; //google
+    public static GoogleApiClient googleApiClient; //google
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
     private ProgressBar progressBar;

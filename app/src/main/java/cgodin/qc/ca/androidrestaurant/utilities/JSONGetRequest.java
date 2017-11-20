@@ -172,6 +172,7 @@ public class JSONGetRequest extends AsyncTask<String, String, JSONObject> {
                         String name = restaurantJsonObject.get("name").getAsString();
                         String lat = restaurantJsonObject.get("geometry").getAsJsonObject().get("location").getAsJsonObject().get("lat").getAsString();
                         String lng = restaurantJsonObject.get("geometry").getAsJsonObject().get("location").getAsJsonObject().get("lng").getAsString();
+
                         double rating = -1;
                         if (restaurantJsonObject.has("rating")){
                             rating = restaurantJsonObject.get("rating").getAsDouble();

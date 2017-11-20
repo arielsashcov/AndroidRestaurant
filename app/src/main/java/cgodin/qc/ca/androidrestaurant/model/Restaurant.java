@@ -1,10 +1,13 @@
 package cgodin.qc.ca.androidrestaurant.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Mohamed on 13/11/2017.
  */
 
-public class Restaurant {
+public class Restaurant implements Parcelable{
 
     private String formatted_address;
     private String name;
@@ -32,6 +35,31 @@ public class Restaurant {
         this.lat = lat;
         this.lng = lng;
     }
+
+    protected Restaurant(Parcel in) {
+        formatted_address = in.readString();
+        name = in.readString();
+        rating = in.readDouble();
+        place_id = in.readString();
+        photo_reference = in.readString();
+        img_link = in.readString();
+        place_url = in.readString();
+        formatted_phone_number = in.readString();
+        lat = in.readString();
+        lng = in.readString();
+    }
+
+    public static final Creator<Restaurant> CREATOR = new Creator<Restaurant>() {
+        @Override
+        public Restaurant createFromParcel(Parcel in) {
+            return new Restaurant(in);
+        }
+
+        @Override
+        public Restaurant[] newArray(int size) {
+            return new Restaurant[size];
+        }
+    };
 
     public String getFormatted_address() {
         return formatted_address;
@@ -127,5 +155,25 @@ public class Restaurant {
                 ", lat='" + lat + '\'' +
                 ", lng='" + lng + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeString(formatted_address);
+        dest.writeString(name);
+        dest.writeDouble(rating);
+        dest.writeString(place_id);
+        dest.writeString(photo_reference);
+        dest.writeString(img_link);
+        dest.writeString(place_url);
+        dest.writeString(formatted_phone_number);
+        dest.writeString(lat);
+        dest.writeString(lng);
     }
 }
