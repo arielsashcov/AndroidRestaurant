@@ -107,7 +107,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, InfoMapActivity.class);
-                intent.putExtra("CURRENT_RESTAURANT", (Parcelable) clickedRestaurant);
+                intent.putExtra("restaurant", (Parcelable) clickedRestaurant);
                 mContext.startActivity(intent);
                 Toast.makeText(mContext, "Click on : " + element, Toast.LENGTH_SHORT).show();
             }

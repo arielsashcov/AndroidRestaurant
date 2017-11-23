@@ -21,6 +21,7 @@ public class Restaurant implements Parcelable{
     private String lng;
 
     public Restaurant() {
+
     }
 
     public Restaurant(String formatted_address, String name, double rating, String place_id, String photo_reference, String img_link, String place_url, String formatted_phone_number, String lat, String lng) {
@@ -48,6 +49,7 @@ public class Restaurant implements Parcelable{
         lat = in.readString();
         lng = in.readString();
     }
+
 
     public static final Creator<Restaurant> CREATOR = new Creator<Restaurant>() {
         @Override
@@ -157,6 +159,7 @@ public class Restaurant implements Parcelable{
                 '}';
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -164,7 +167,6 @@ public class Restaurant implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
         dest.writeString(formatted_address);
         dest.writeString(name);
         dest.writeDouble(rating);
